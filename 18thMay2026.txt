@@ -1,0 +1,150 @@
+-- DATABASE OPERATIONS
+
+SHOW DATABASES;
+
+CREATE DATABASE UniversityData;
+
+USE UniversityData;
+
+SHOW TABLES FROM UniversityData;
+
+SELECT * FROM Students;
+
+DESC Students;
+
+-- CREATE TABLE
+
+CREATE TABLE Students(
+    student_id INT,
+    student_name VARCHAR(50),
+    student_marks INT
+);
+
+INSERT INTO Students VALUES
+(101, 'Arjun', 91),
+(102, 'Keerthana', 88),
+(103, 'Vikram', 79),
+(104, 'Sneha', 97),
+(105, 'Mahesh', 85);
+
+SELECT * FROM Students;
+
+-- ALTER TABLE OPERATIONS
+
+-- Add Column without default value
+ALTER TABLE Students
+ADD student_phone BIGINT;
+
+INSERT INTO Students
+VALUES(106, 'Lavanya', 92, 9876543210);
+
+SELECT * FROM Students;
+
+-- Add Column with default value
+ALTER TABLE Students
+ADD student_branch VARCHAR(20) DEFAULT 'CSE';
+
+INSERT INTO Students
+VALUES(107, 'Nithin', 89, 9123456789, 'AIML');
+
+SELECT * FROM Students;
+
+-- Drop specific column
+ALTER TABLE Students
+DROP COLUMN student_phone;
+
+SELECT * FROM Students;
+
+-- DELETE / DROP / RENAME
+
+-- Delete all rows
+TRUNCATE TABLE Students;
+
+-- Drop complete table
+DROP TABLE Students;
+
+-- Rename table
+RENAME TABLE Faculty TO Professors;
+
+-- FACULTY TABLE
+
+CREATE TABLE Faculty (
+    faculty_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(25),
+    last_name VARCHAR(25),
+    salary INT,
+    joining_date DATETIME,
+    department VARCHAR(25)
+);
+
+-- Insert Records
+INSERT INTO Faculty
+(faculty_id, first_name, last_name, salary, joining_date, department)
+VALUES
+(1, 'Ramesh', 'Kumar', 75000, '2021-01-15 09:00:00', 'CSE'),
+(2, 'Deepika', 'Sharma', 68000, '2020-05-20 10:15:00', 'ECE'),
+(3, 'Suresh', 'Naidu', 82000, '2019-08-11 11:30:00', 'MECH'),
+(4, 'Anjali', 'Reddy', 79000, '2022-02-10 09:45:00', 'EEE'),
+(5, 'Kiran', 'Varma', 85000, '2021-10-05 08:30:00', 'CIVIL'),
+(6, 'Swathi', 'Patel', 72000, '2023-01-12 10:00:00', 'IT'),
+(7, 'Manoj', 'Yadav', 69000, '2022-06-18 09:20:00', 'AIML'),
+(8, 'Bhavana', 'Rao', 81000, '2021-12-25 11:00:00', 'DS');
+
+SELECT * FROM Faculty;
+
+-- UPDATE OPERATIONS
+
+-- Update specific row
+UPDATE Faculty
+SET first_name = 'Aditya'
+WHERE faculty_id = 1;
+
+-- Update whole column
+UPDATE Faculty
+SET salary = salary + 5000;
+
+SELECT * FROM Faculty;
+
+-- DELETE OPERATION
+
+-- Delete a specific row
+DELETE FROM Faculty
+WHERE faculty_id = 8;
+
+SELECT * FROM Faculty;
+
+-- TCL COMMANDS
+
+CREATE TABLE Courses(
+    course_id INT
+);
+
+START TRANSACTION;
+
+INSERT INTO Courses VALUES(501);
+
+SAVEPOINT semester1;
+
+INSERT INTO Courses VALUES(502);
+
+SAVEPOINT semester2;
+
+SELECT * FROM Courses;
+
+-- Rollback to savepoint
+ROLLBACK TO semester1;
+
+SELECT * FROM Courses;
+
+COMMIT;
+
+-- WHERE CLAUSE EXAMPLES
+
+SELECT * FROM Faculty
+WHERE salary < 70000;
+
+SELECT * FROM Faculty
+WHERE salary > 80000;
+
+SELECT * FROM Faculty
+WHERE salary = 77000;
