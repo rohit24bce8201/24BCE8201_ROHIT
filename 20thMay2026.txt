@@ -1,0 +1,168 @@
+USE UniversityData;
+
+SHOW TABLES FROM UniversityData;
+
+-- =========================================
+-- CREATING STUDENTS TABLE
+-- =========================================
+
+CREATE TABLE Students (
+    ID INT NOT NULL,
+    LastName VARCHAR(255) UNIQUE NOT NULL,
+    FirstName VARCHAR(255) NOT NULL,
+    Age INT
+);
+
+DESC Students;
+
+-- =========================================
+-- ADD UNIQUE CONSTRAINT
+-- =========================================
+
+ALTER TABLE Students
+ADD CONSTRAINT unique_age UNIQUE (Age);
+
+DESC Students;
+
+-- =========================================
+-- DROP UNIQUE CONSTRAINT
+-- =========================================
+
+ALTER TABLE Students
+DROP CONSTRAINT LastName;
+
+DESC Students;
+
+-- =========================================
+-- INSERT RECORDS
+-- =========================================
+
+INSERT INTO Students
+VALUES(1,'Reddy','Arjun',20);
+
+-- =========================================
+-- MODIFY COLUMN
+-- =========================================
+
+ALTER TABLE Students
+MODIFY Age INT NOT NULL;
+
+DESC Students;
+
+-- =========================================
+-- DROP CONSTRAINT
+-- =========================================
+
+ALTER TABLE Students
+DROP CONSTRAINT unique_age;
+
+-- =========================================
+-- ADD PRIMARY KEY
+-- =========================================
+
+ALTER TABLE Students
+ADD PRIMARY KEY (ID);
+
+DESC Students;
+
+-- =========================================
+-- INSERT MORE RECORDS
+-- =========================================
+
+INSERT INTO Students
+VALUES(2,'Sharma','Keerthana',21);
+
+-- =========================================
+-- ADD CHECK CONSTRAINT
+-- =========================================
+
+ALTER TABLE Students
+ADD CONSTRAINT check_age
+CHECK(Age>=18);
+
+INSERT INTO Students
+VALUES(3,'Naidu','Vikram',17);
+
+INSERT INTO Students
+VALUES(4,'Patel','Sneha',19);
+
+-- =========================================
+-- CREATING STUDENTS1 TABLE
+-- =========================================
+
+CREATE TABLE Students1 (
+    ID INT NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(255),
+    Age INT,
+    City VARCHAR(255) DEFAULT 'Vellore'
+);
+
+DESC Students1;
+
+-- =========================================
+-- CREATING COURSES TABLE
+-- =========================================
+
+CREATE TABLE Courses(
+    CourseID INT PRIMARY KEY,
+    CourseFee DOUBLE NOT NULL,
+    CourseType VARCHAR(10)
+);
+
+DESC Courses;
+
+-- =========================================
+-- ADD PRIMARY KEY
+-- =========================================
+
+ALTER TABLE Students1
+ADD PRIMARY KEY(ID);
+
+DESC Students1;
+
+-- =========================================
+-- DROP PRIMARY KEY
+-- =========================================
+
+ALTER TABLE Students1
+DROP PRIMARY KEY;
+
+DESC Students1;
+
+-- =========================================
+-- CREATING DEPARTMENTS TABLE
+-- =========================================
+
+CREATE TABLE Departments(
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(100) NOT NULL
+);
+
+INSERT INTO Departments
+VALUES
+(101,'CSE'),
+(102,'ECE');
+
+-- =========================================
+-- CREATING SUBJECTS TABLE
+-- =========================================
+
+CREATE TABLE Subjects(
+    subject_id INT PRIMARY KEY,
+    subject_name VARCHAR(100) NOT NULL,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Departments(dept_id)
+);
+
+DESC Subjects;
+
+-- =========================================
+-- INSERTING RECORDS INTO SUBJECTS
+-- =========================================
+
+INSERT INTO Subjects
+VALUES
+(501,'Data Structures',101),
+(502,'Digital Electronics',102),
+(503,'Java Programming',101);
