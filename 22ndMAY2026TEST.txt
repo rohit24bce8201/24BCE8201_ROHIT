@@ -1,0 +1,75 @@
+1.Write an SQL Query to fetch "FIRST_NAME" from Worker table using the alias name as <WORKER_NAME>
+
+SELECT First_Name as WORKER_NAME
+FROM Worker;
+
+
+2.Write an SQL Query to fetch unique values of DEPARTMENT from Worker Table.
+
+SELECT DISTINCT(Department)
+FROM Worker;
+
+3.Write an SQL Query to print details for Workers with the first name as "Vipul" and "Satish" from Worker table.(Without using OR condition)
+
+SELECT * 
+FROM Worker
+WHERE First_Name IN ("Vipul","Satish");
+
+4.Write an SQL Query to print details of the Workers whose FIRST_NAME contains 'a'
+
+SELECT * 
+FROM Worker 
+WHERE First_Name LIKE "%a%";
+
+5.Write an SQL Query to print details of the Workers whose FIRST_NAME ends with 'a'
+
+SELECT * 
+FROM Worker 
+WHERE First_Name LIKE "%a";
+
+
+6.Write an SQL Query to print details of admin whose salary lies between 100000 and 500000
+
+SELECT *
+FROM Worker
+WHERE Department = 'Admin'
+  AND Salary BETWEEN 100000 AND 500000;
+
+
+7.Write an SQL Query to fetch the count of employees working in the department 'Admin'
+
+SELECT COUNT(*)
+FROM Worker
+WHERE Department LIKE "Admin";
+
+8.Write an SQL Query to show second highest salary from a table
+
+SELECT MAX(Salary) 
+FROM Worker
+WHERE Salary < (
+    SELECT MAX(Salary)
+    FROM Worker
+);
+
+9.Write an SQL Query to fetch department that have less than three people in it
+
+SELECT Department, COUNT(*) AS EmployeeCount
+FROM Worker
+GROUP BY Department
+HAVING COUNT(*) < 3;
+
+10.Write an SQL Query to show all departments along with the total number of people in there
+
+SELECT Department,COUNT(*) AS WORKERS_COUNT
+FROM Worker
+GROUP BY Department;
+
+11.Write an SQL Query to print the name of employees having the highest salary in each department
+
+SELECT First_Name, Department, Salary
+FROM Worker w
+WHERE Salary = (
+    SELECT MAX(Salary)
+    FROM Worker
+    WHERE Department = w.Department
+);
