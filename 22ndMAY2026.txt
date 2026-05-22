@@ -1,0 +1,70 @@
+USE UniversityData;
+
+-- CREATING DEPARTMENTS TABLE
+
+CREATE TABLE Departments(
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(20) NOT NULL UNIQUE
+);
+
+INSERT INTO Departments VALUES
+(101,'CSE'),
+(102,'ECE'),
+(103,'MECH'),
+(104,'CIVIL'),
+(105,'AIML');
+
+SELECT * FROM Departments;
+
+-- CREATING PROFESSORS TABLE
+
+CREATE TABLE Professors(
+    dept_id INT PRIMARY KEY,
+    professor_name VARCHAR(30) NOT NULL
+);
+
+INSERT INTO Professors VALUES
+(101,'Dr. Ramesh'),
+(102,'Dr. Deepika'),
+(103,'Dr. Suresh'),
+(106,'Dr. Kiran'),
+(107,'Dr. Swathi');
+
+SELECT * FROM Professors;
+
+-- CROSS JOIN
+
+SELECT *
+FROM Departments
+CROSS JOIN Professors
+ORDER BY dept_id ASC;
+
+-- INNER JOIN
+
+SELECT *
+FROM Departments
+INNER JOIN Professors
+ON Departments.dept_id = Professors.dept_id;
+
+-- NATURAL JOIN
+
+
+SELECT *
+FROM Departments
+NATURAL JOIN Professors;
+
+-- LEFT OUTER JOIN
+
+SELECT *
+FROM Departments
+LEFT OUTER JOIN Professors
+ON Departments.dept_id = Professors.dept_id
+ORDER BY Departments.dept_id ASC;
+
+-- RIGHT OUTER JOIN
+
+SELECT *
+FROM Departments
+RIGHT OUTER JOIN Professors
+ON Departments.dept_id = Professors.dept_id
+ORDER BY Professors.dept_id ASC;
