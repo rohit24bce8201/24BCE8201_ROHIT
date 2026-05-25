@@ -1,0 +1,106 @@
+
+show dbs
+
+ Output:
+ admin   40.00 KiB
+ config  12.00 KiB
+ local   40.00 KiB
+
+use UniversityData
+
+ Output:
+ switched to db UniversityData
+
+show collections
+
+db
+
+ Output:
+ UniversityData
+
+db.dropDatabase()
+
+ Output:
+ { ok: 1, dropped: 'UniversityData' }
+
+use UniversityData
+
+Output:
+ already on db UniversityData
+
+
+db.createCollection("Students")
+
+ Output:
+ { ok: 1 }
+
+show collections
+
+ Output:
+ Students
+
+db.Students.drop()
+
+ Output:
+ true
+
+db.createCollection("Students")
+
+ Output:
+ { ok: 1 }
+
+
+db.Students.insertOne({
+    student_id: 101,
+    student_name: "Arjun",
+    branch: "CSE",
+    email: "arjun101@gmail.com",
+    marks: 91
+})
+
+ Output:
+ {
+   acknowledged: true,
+   insertedId: ObjectId("...")
+ }
+
+
+db.Students.find()
+
+ Output:
+ {
+   _id: ObjectId("..."),
+   student_id: 101,
+   student_name: "Arjun",
+   branch: "CSE",
+   email: "arjun101@gmail.com",
+   marks: 91
+ }
+
+
+db.Students.insertMany([
+{
+    student_id: 102,
+    student_name: "Keerthana",
+    branch: "ECE",
+    email: "keerthana@gmail.com",
+    marks: 88
+},
+{
+    student_id: 103,
+    student_name: "Vikram",
+    branch: "AIML",
+    email: "vikram@gmail.com",
+    marks: 79
+},
+{
+    student_id: 104,
+    student_name: "Sneha",
+    branch: "CSE",
+    email: "sneha@gmail.com",
+    marks: 97
+}
+])
+
+
+db.Students.find().pretty()
