@@ -1,0 +1,190 @@
+mkdir C:\data
+
+cd C:\data
+
+C:\data>
+
+mkdir db0
+
+
+mkdir db1
+
+mkdir db2
+
+
+CMD1:
+"C:\Program Files\MongoDB\Server\8.3\bin\mongod.exe" --replSet myReplSet --dbpath C:\data\db0 --port 27017 --bind_ip localhost
+
+CMD2:
+"C:\Program Files\MongoDB\Server\8.3\bin\mongod.exe" --replSet myReplSet --dbpath C:\data\db1 --port 27018 --bind_ip localhost
+
+CMD3:
+"C:\Program Files\MongoDB\Server\8.3\bin\mongod.exe" --replSet myReplSet --dbpath C:\data\db2 --port 27019 --bind_ip localhost
+
+Connecting port 27017 to Compass. Then,
+
+rs.initiate({
+   _id:"myReplSet",
+   members:[
+      {_id:0,host:"localhost:27017"},
+      {_id:1,host:"localhost:27018"},
+      {_id:2,host:"localhost:27019"}
+   ]
+})
+
+Output:
+{ ok : 1 }
+
+rs.status()
+
+Output:
+{
+  "_id" : 0,
+  "name" : "localhost:27017",
+  "health" : 1,
+  "state" : 1,
+  "stateStr" : "PRIMARY",
+  "self" : true
+},
+
+{
+  "_id" : 1,
+  "name" : "localhost:27018",
+  "health" : 1,
+  "state" : 2,
+  "stateStr" : "SECONDARY",
+  "syncingTo" : "localhost:27017"
+},
+
+{
+  "_id" : 2,
+  "name" : "localhost:27019",
+  "health" : 1,
+  "state" : 2,
+  "stateStr" : "SECONDARY",
+  "syncingTo" : "localhost:27017"
+},
+
+"ok" : 1
+
+show dbs
+
+Output:
+admin   40.00 KiB
+config  72.00 KiB
+local   88.00 KiB
+
+use UniversityData
+
+COMMAND:
+db.students.insertOne({
+   student_id:101,
+   student_name:"Arjun",
+   branch:"CSE",
+   marks:91
+})
+
+Output:
+{
+  acknowledged: true,
+  insertedId: ObjectId("...")
+}
+
+COMMAND:
+db.students.find()
+
+Output:
+[
+  {
+    _id: ObjectId("..."),
+    student_id: 101,
+    student_name: "Arjun",
+    branch: "CSE",
+    marks: 91
+  }
+]
+
+COMMAND:
+rs.status()
+
+Output:
+{
+  "_id" : 0,
+  "name" : "localhost:27017",
+  "health" : 1,
+  "state" : 1,
+  "stateStr" : "PRIMARY",
+  "uptime" : 281,
+  "optime" : {
+      "ts" : Timestamp(1781016083, 1),
+      "t" : NumberLong(1)
+  },
+  "optimeDate" : ISODate("2026-06-09T14:41:23Z"),
+  "syncingTo" : "",
+  "syncSourceHost" : "",
+  "syncSourceId" : -1,
+  "infoMessage" : "could not find member to sync from",
+  "electionTime" : Timestamp(1781016043, 1),
+  "electionDate" : ISODate("2026-06-09T14:40:43Z"),
+  "configVersion" : 1,
+  "self" : true,
+  "lastHeartbeatMessage" : ""
+},
+
+{
+  "_id" : 1,
+  "name" : "localhost:27018",
+  "health" : 1,
+  "state" : 2,
+  "stateStr" : "SECONDARY",
+  "uptime" : 51,
+  "optime" : {
+      "ts" : Timestamp(1781016073, 1),
+      "t" : NumberLong(1)
+  },
+  "optimeDurable" : {
+      "ts" : Timestamp(1781016073, 1),
+      "t" : NumberLong(1)
+  },
+  "optimeDate" : ISODate("2026-06-09T14:41:13Z"),
+  "optimeDurableDate" : ISODate("2026-06-09T14:41:13Z"),
+  "lastHeartbeat" : ISODate("2026-06-09T14:41:23.690Z"),
+  "lastHeartbeatRecv" : ISODate("2026-06-09T14:41:24.319Z"),
+  "pingMs" : NumberLong(1),
+  "lastHeartbeatMessage" : "",
+  "syncingTo" : "localhost:27017",
+  "syncSourceHost" : "localhost:27017",
+  "syncSourceId" : 0,
+  "infoMessage" : "",
+  "configVersion" : 1
+},
+
+{
+  "_id" : 2,
+  "name" : "localhost:27019",
+  "health" : 1,
+  "state" : 2,
+  "stateStr" : "SECONDARY",
+  "uptime" : 51,
+  "optime" : {
+      "ts" : Timestamp(1781016073, 1),
+      "t" : NumberLong(1)
+  },
+  "optimeDurable" : {
+      "ts" : Timestamp(1781016073, 1),
+      "t" : NumberLong(1)
+  },
+  "optimeDate" : ISODate("2026-06-09T14:41:13Z"),
+  "optimeDurableDate" : ISODate("2026-06-09T14:41:13Z"),
+  "lastHeartbeat" : ISODate("2026-06-09T14:41:23.690Z"),
+  "lastHeartbeatRecv" : ISODate("2026-06-09T14:41:24.318Z"),
+  "pingMs" : NumberLong(0),
+  "lastHeartbeatMessage" : "",
+  "syncingTo" : "localhost:27017",
+  "syncSourceHost" : "localhost:27017",
+  "syncSourceId" : 0,
+  "infoMessage" : "",
+  "configVersion" : 1
+}
+
+"ok" : 1
